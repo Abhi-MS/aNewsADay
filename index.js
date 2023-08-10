@@ -15,7 +15,7 @@ app.get("/", async (req, res) => {
     const response = await axios.get("https://newsapi.org/v2/everything?q=Apple&from="+date+"&sortBy=popularity&apiKey=6185b60914b44c2e9e4f5b9b3a579666");
     const result = response.data;
     const randomNumber = Math.floor(Math.random()*result.articles.length);
-    console.log(result.articles[randomNumber[content]]);
+    console.log(result.articles[randomNumber]);
     const news = {
       title : result.articles[randomNumber].title,
       author : result.articles[randomNumber].author,
