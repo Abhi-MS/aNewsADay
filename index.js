@@ -1,6 +1,8 @@
-import express from "express";
-import bodyParser from "body-parser";
-import axios from "axios";
+require('dotenv').config();
+
+const express = require("express");
+const bodyParser = require("body-parser");
+const axios = require("axios");
 
 const app = express();
 const port = 3000;
@@ -12,7 +14,7 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.get("/", async (req, res) => {
   try {
-    const response = await axios.get("https://newsapi.org/v2/everything?q=Apple&from="+date+"&sortBy=popularity&apiKey=6185b60914b44c2e9e4f5b9b3a579666");
+    const response = await axios.get("https://newsapi.org/v2/everything?q=Apple&from=2023-08-10&sortBy=popularity&apiKey="+process.env.API_KEY);
     const result = response.data;
     const randomNumber = Math.floor(Math.random()*result.articles.length);
     console.log(result.articles[randomNumber]);
@@ -41,7 +43,7 @@ app.get("/yesterday", async (req, res) => {
       author : result.articles[randomNumber].author,
       article : result.articles[randomNumber].description,
       url : result.articles[randomNumber].url,
-      imageUrl : result.articles[randomNumber].urlToImage
+      urlToImage : result.articles[randomNumber].urlToImage
     };
     res.render("index.ejs", { data: news });
   } catch (error) {
